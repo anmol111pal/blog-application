@@ -26,7 +26,7 @@ const WriteBlog = (props) => {
   const handlePublish = async (e) => {
     e.preventDefault();
     const user_id = Cookies.get("user_id");
-    const url = "http://localhost:5000/api/blogs/write";
+    const url = "https://blog-application-backend-mkyvgzeib-anmol111pal.vercel.app/api/blogs/write";
     try {
       const response = await axios.post(url, blog, {
         headers: {
