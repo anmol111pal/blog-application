@@ -24,7 +24,7 @@ const Register = (props) => {
     e.preventDefault();
 
     // send a POST request to the backend
-    const URL = "https://blog-application-backend-mkyvgzeib-anmol111pal.vercel.app/api/users/register";
+    const URL = "http://localhost:5000/api/users/register";
     try {
       const response = await axios.post(URL, userData);
       if(response) {

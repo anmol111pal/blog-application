@@ -30,7 +30,7 @@ const Login = (props) => {
 
     // send a POST request to the backend
     try {
-      const url = "https://blog-application-backend-mkyvgzeib-anmol111pal.vercel.app/api/users/login";
+      const url = "http://localhost:5000/api/users/login";
       const response = await axios.post(url, userData);
       if(response) {
         setIsLoggedIn(true);

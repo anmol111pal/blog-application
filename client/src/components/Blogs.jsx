@@ -19,7 +19,7 @@ const Blogs = (props) => {
   
 
   async function fetchBlogs(user_id) {
-    const url = "https://blog-application-backend-mkyvgzeib-anmol111pal.vercel.app/api/blogs";
+    const url = "http://localhost:5000/api/blogs";
     const response = await axios(url, {
       headers: {
         'Cookie': `user_id=${user_id}`, // Set the 'user_id' cookie in the headers
