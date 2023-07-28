@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import Navbar from "./Navbar";
 import axios from "axios";
 import {useAuth} from "../AuthContext";
+import CryptoJS from "crypto-js";
+import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const Register = (props) => {
   const [userData, setUserData] = useState({
@@ -11,7 +14,8 @@ const Register = (props) => {
     password: ""
   });
   
-  const {isLoggedIn, setIsLoggedIn, user, setUser} = useAuth();
+  const {setIsLoggedIn, setUser} = useAuth();
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setUserData({
@@ -25,15 +29,21 @@ const Register = (props) => {
 
     // send a POST request to the backend
     const URL = "http://localhost:5000/api/users/register";
+
+    const userDataEncrypted = {...userData};
+    userDataEncrypted.password = CryptoJS.SHA256(userData.password).toString() // encrypting user password
+
     try {
-      const response = await axios.post(URL, userData);
+      const response = await axios.post(URL, userDataEncrypted);
       if(response) {
+        console.log(userDataEncrypted);
         setIsLoggedIn(true);
         setUser(response.data);
+        Cookies.set("user_id", response.data.user._id);
       }
-      console.log("Response data: ", response.data);
 
       // redirect to /blogs page (upon successful authentication)
+      navigate("/blogs");
 
 
     } catch(err) {

@@ -4,6 +4,7 @@ import Navbar from "./Navbar";
 import axios from "axios";
 import { useAuth } from "../AuthContext";
 import Cookies from "js-cookie";
+import CryptoJS from "crypto-js";
 
 const Login = (props) => {
   const [userData, setUserData] = useState({
@@ -27,11 +28,17 @@ const Login = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    let userDataEncrypted = {...userData};
+
+    userDataEncrypted = {
+      ...userData,
+      password: CryptoJS.SHA256(userData.password).toString()
+    };
 
     // send a POST request to the backend
     try {
       const url = "http://localhost:5000/api/users/login";
-      const response = await axios.post(url, userData);
+      const response = await axios.post(url, userDataEncrypted);
       if(response) {
         setIsLoggedIn(true);
         setUser(response.data.userMatch);
