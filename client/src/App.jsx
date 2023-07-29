@@ -9,6 +9,8 @@ import About from "./components/About";
 import Blogs from "./components/Blogs";
 import Profile from "./components/Profile";
 import WriteBlog from "./components/WriteBlog";
+import { useAuth } from "./AuthContext";
+import EditProfile from "./components/EditProfile";
 
 const App = () => {
   return (
@@ -21,6 +23,8 @@ const App = () => {
       <Route exact path="/about" element={<About />} />
       <Route exact path="/blogs" element={<Blogs />} />
       <Route exact path="/me" element={<Profile />} />
+
+      <Route exact path="/profile/edit" element={<EditProfile />} />
 
       <Route exact path="/write" element={<WriteBlog />} />
     </Routes>

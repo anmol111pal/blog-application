@@ -31,7 +31,7 @@ const Register = (props) => {
     const URL = "http://localhost:5000/api/users/register";
 
     const userDataEncrypted = {...userData};
-    userDataEncrypted.password = CryptoJS.SHA256(userData.password).toString() // encrypting user password
+    userDataEncrypted.password = CryptoJS.SHA256(userData.password).toString(); // encrypting user password
 
     try {
       const response = await axios.post(URL, userDataEncrypted);

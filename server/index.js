@@ -10,7 +10,7 @@ const blogRoute = require("./routes/blogsRoute.js");
 const mongoose = require("mongoose");
 
 const app = express();
-const HOSTNAME = process.env.HOSTNAME || "localhost";
+const HOSTNAME = "localhost";
 const PORT = process.env.PORT || 5000;
 
 const connect = async () => {
