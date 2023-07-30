@@ -1,11 +1,47 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import Navbar from "./Navbar";
+import BlogItem from "./BlogItem";
 import { useAuth } from "../AuthContext";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import Cookies from "js-cookie";
 
 const Profile = (props) => {
   const navigate = useNavigate();
   const { user } = useAuth();
+
+  const [isLoading, setIsLoading] = useState(true);
+  const [blogs, setBlogs] = useState([]);
+
+  useEffect(() => {
+    const user_id = Cookies.get("user_id");
+    
+    const fetchData = async () => {
+      const url = "http://localhost:5000/api/blogs/my";
+      try {
+        const response = await axios.get(url, {
+          headers: {
+            "Cookie": `user_id = ${user_id}`, // Set the 'user_id' cookie in the headers
+          },
+          withCredentials: true, // Include this line to send cookies
+        });
+
+        if(response) {
+          console.log("Resp: ", response.data.blogs); // blogs of the current user
+          setIsLoading(false);
+          setBlogs(response.data.blogs);
+        }
+
+      } catch(err) {
+        setIsLoading(false);
+        console.log("Error while fetching user's blogs", err);
+      }
+    }
+
+    fetchData();
+
+  }, []);
+
   const joiningDate = user.createdAt.substring(0, 10);
 
   const navigateToEditProfile = () => {
@@ -15,7 +51,7 @@ const Profile = (props) => {
   return (
     <>
       <Navbar />
-      <div className="container mt-5">
+      <div className="container my-5">
         <div className="card" style={{ width: "100%", margin: "25px" }}>
           <div className="card-body">
             <h3 className="card-title">{user.name}</h3>
@@ -27,6 +63,23 @@ const Profile = (props) => {
           </div>
         </div>
       </div>
+
+      <div className="container my-4">
+        <h3 className="text-center"> My Blogs </h3>
+        {isLoading ? <h4 className="text-center my-5"> Fetching your blogs ... </h4>: null}
+
+        {
+          blogs.map((blog, i) => {
+            return (
+              <BlogItem 
+                key={i} 
+                blog={blog}
+               />
+            )
+          })
+        }
+      </div>
+
     </>
   )
 }

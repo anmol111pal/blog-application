@@ -51,7 +51,17 @@ const getAllBlogs = async (req, res) => {
 const getMyBlogs = async (req, res) => {
     if(req.cookies.user_id) {
         const user_id = req.cookies.user_id;
-        const blogs = await Blog.find({_id: user_id}, {_id: 0, title: 1, content: 1, likes: 1, createdAt: 1});
+        const userPosts = await User.findOne({_id: user_id}, {_id: 0, posts: 1});
+        const blogIDs = userPosts.posts;
+
+        // fetch the blogs using the blog IDs
+        const blogs = [];
+        for(let blogID of blogIDs) {
+            blogID = blogID.toString();
+            const resp = await Blog.findOne({_id: blogID});
+            blogs.push(resp);
+        }
+
         res.status(200).send({
             code: 200,
             blogs
