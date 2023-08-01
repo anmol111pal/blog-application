@@ -8,7 +8,7 @@ const { getUserDetails, register, login, logout, update } = require("../controll
 router.post("/register", register);
 router.post("/login", login);
 router.post("/logout", logout);
-router.post("/update", update);
+router.patch("/update", update);
 
 router.get("/me", getUserDetails);
 

@@ -36,7 +36,7 @@ const EditProfile = () => {
             if(userData.email !== "") updatedUser.email = userData.email;
             if(userData.password !== "") updatedUser.password = CryptoJS.SHA256(userData.password).toString();
             console.log("new user: ", updatedUser);
-            const response = await axios.post(url, updatedUser, {
+            const response = await axios.patch(url, updatedUser, {
                 headers: {
                   "Cookie": `user_id=${user_id}`, // Set the 'user_id' cookie in the headers
                 },
