@@ -17,26 +17,6 @@ const EditProfile = () => {
 
     const user_id = Cookies.get("user_id");
 
-    // this is used to populate the input fields with the previous user-info
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         const url = "http://localhost:5000/api/users/me";
-    //         const response = await axios.get(url, {
-    //             headers: {
-    //               "Cookie": `user_id=${user_id}`, // Set the 'user_id' cookie in the headers
-    //             },
-    //             withCredentials: true, // Include this to send cookies
-    //           });
-
-    //           if(response) {
-    //             console.log("Resp: ", response.data);
-    //             setUserData(response.data);  // set the state
-    //           }
-    //     }
-
-    //     fetchData();
-    // }, []);
-
     const navigate = useNavigate();
 
     const handleChange = (e) => {
