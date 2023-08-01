@@ -7,15 +7,14 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 const Profile = (props) => {
+  const user_id = Cookies.get("user_id");
   const navigate = useNavigate();
   const { user } = useAuth();
 
   const [isLoading, setIsLoading] = useState(true);
   const [blogs, setBlogs] = useState([]);
 
-  useEffect(() => {
-    const user_id = Cookies.get("user_id");
-    
+  useEffect(() => {    
     const fetchData = async () => {
       const url = "http://localhost:5000/api/blogs/my";
       try {
@@ -27,7 +26,6 @@ const Profile = (props) => {
         });
 
         if(response) {
-          console.log("Resp: ", response.data.blogs); // blogs of the current user
           setIsLoading(false);
           setBlogs(response.data.blogs);
         }
@@ -48,6 +46,26 @@ const Profile = (props) => {
     navigate("/profile/edit"); // component to edit the profile
   }
 
+  const deleteUser = async () => {
+    alert("Are you sure ?");
+    try {
+      const url = "http://localhost:5000/api/users/delete";
+      const response = await axios.delete(url, {
+        headers: {
+          "Cookie": `user_id = ${user_id}`, // Set the 'user_id' cookie in the headers
+        },
+        withCredentials: true, // Include this line to send cookies
+      });
+
+      if(response) {
+        // user deleted
+        navigate("/logout");
+      }
+    } catch(err) {
+      console.log("Error while deletiing user: ", err);
+    }
+  }
+
   return (
     <>
       <Navbar />
@@ -59,7 +77,11 @@ const Profile = (props) => {
             <p className="card-title">{user.email}</p>
             <p className="card-text">Joined {joiningDate}</p>
             <p className="card-text">Authored  {user.posts.length} blogs till now.</p>
-            <button className="btn btn-outline-primary" onClick={navigateToEditProfile}>Edit Profile</button>
+            <div className="d-flex justify-content-between">
+              <button className="btn btn-outline-primary mr-4" onClick={navigateToEditProfile}>Edit Profile</button>
+              <button className="btn btn-outline-danger ml-4" onClick={deleteUser}>Delete Profile</button>
+            </div>
+            
           </div>
         </div>
       </div>

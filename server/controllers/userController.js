@@ -1,5 +1,6 @@
-const shortid = require("shortid");
 const User = require("../models/UserModel.js");
+const Blog = require("../models/BlogModel.js");
+const mongoose = require("mongoose");
 
 const loggedInUsers = require("./login.js");
 
@@ -13,6 +14,43 @@ const getUserDetails = async (req, res) => {
             code: 401,
             message: "Auth error."
         });
+    }
+}
+
+const deleteUser = async (req, res) => {
+    if(req.cookies.user_id) {
+        const session = await mongoose.startSession();
+        session.startTransaction();
+
+        const user_id = req.cookies.user_id;
+        console.log(`${user_id} delete request received`);
+
+        try {
+            const respBlogDelete = await Blog.deleteMany({author: user_id}, {session});
+            const respUserDelete = await User.deleteOne({_id: user_id}, {session});
+            
+            if(respUserDelete.deletedCount === 1 && respBlogDelete.deletedCount >= 0) {
+                await session.commitTransaction();
+
+                console.log("User deleted successfully.");
+                res.status(200).send({
+                    code: 200,
+                    message: "User deleted"
+                });
+            } else {
+                throw new Error("Failed to delete");
+            }
+            
+        } catch(err) {
+            await session.abortTransaction();
+            console.log("Error while deleting user profile: ", err);
+            res.status(501).send({
+                code: 501,
+                message: "Some error occurred while deleting user profile"
+            });
+        } finally {
+            session.endSession();
+        }
     }
 }
 
@@ -102,5 +140,5 @@ const logout = async (req, res) => {
 }
 
 module.exports = {
-    getUserDetails, register, login, logout, update
+    getUserDetails, register, login, logout, update, deleteUser
 }
