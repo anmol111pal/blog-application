@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 import CryptoJS from "crypto-js";
 import Navbar from "./Navbar";
 import { useAuth } from "../AuthContext";
