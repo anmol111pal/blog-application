@@ -4,7 +4,7 @@ Introducing "GitBlogify" - the GitHub blogging app! Sign up/login, write posts, 
 
 This is a application is developed using the MERN (MongoDB, Express.js, React.js, Node.js) stack. The application allows users to create, read, update, and delete blog posts. It provides a user-friendly interface for writing and managing blogs with rich text editing capabilities.
 
-<h1 align="center"><img height="50px" width="50px" src="./Gifs/tech-stack.gif" /> Tech Stack: </h1>
+<h1 align="center"> Tech Stack: </h1>
 
 ![React.js](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB) ![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB) ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)  ![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white) ![NPM](https://img.shields.io/badge/NPM-%23000000.svg?style=for-the-badge&logo=npm&logoColor=white) ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E) ![Bootstrap](https://img.shields.io/badge/bootstrap-%23563D7C.svg?style=for-the-badge&logo=bootstrap&logoColor=white)
 
