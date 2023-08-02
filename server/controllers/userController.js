@@ -98,7 +98,7 @@ const register = async (req, res) => {
     res.cookie("user_id", createdUser._id.toString());
     console.log(`${user.name} logged in`);
     res.status(200).send({
-        user
+        createdUser
     });
 }
 

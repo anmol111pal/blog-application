@@ -36,10 +36,9 @@ const Register = (props) => {
     try {
       const response = await axios.post(URL, userDataEncrypted);
       if(response) {
-        console.log(userDataEncrypted);
         setIsLoggedIn(true);
-        setUser(response.data);
-        Cookies.set("user_id", response.data.user._id);
+        setUser(response.data.createdUser);
+        Cookies.set("user_id", response.data.createdUser._id);
       }
 
       // redirect to /blogs page (upon successful authentication)
@@ -47,7 +46,7 @@ const Register = (props) => {
 
 
     } catch(err) {
-      console.log(err);
+      console.log("Error while creating user profile: ", err);
     }
   }
 
