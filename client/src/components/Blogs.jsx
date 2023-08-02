@@ -9,6 +9,7 @@ const Blogs = (props) => {
   const [blogsData, setBlogsData] = useState([]);
   const [authorData, setAuthorData] = useState([]);
   const {isLoggedIn} = useAuth();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const user_id = Cookies.get("user_id");
@@ -30,6 +31,7 @@ const Blogs = (props) => {
     if(response) {
       setBlogsData(response.data.blogs);
       setAuthorData(response.data.authors);
+      setIsLoading(false);
       // console.log("Blogs: ", response.data.blogs);
       // console.log("Authors: ", response.data.authors);
     }
@@ -40,8 +42,11 @@ const Blogs = (props) => {
         <Navbar />
         {isLoggedIn ? 
           <div className="container mt-5">
-            <h1 className="text-center">Blogs</h1>
-            {blogsData.map((blog, i) => (
+            <h3 className="text-center">Blogs</h3>
+
+          {isLoading ? 
+          <h3 className="text-center my-5"> Fetching blogs ... </h3> 
+          : blogsData.map((blog, i) => (
               <BlogItem key={i} blog={blog} author={authorData[i]} />
             ))}
           </div> 
