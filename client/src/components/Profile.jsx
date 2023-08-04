@@ -86,11 +86,16 @@ const Profile = (props) => {
         </div>
       </div>
 
-      <div className="container my-4">
+      <div className="container my-4 d-flex flex-column">
         <h3 className="text-center"> My Blogs </h3>
         {isLoading ? <h4 className="text-center my-5"> Fetching your blogs ... </h4>: null}
 
-        {
+        { blogs.length === 0 ? 
+        <div className="container d-flex flex-column">
+            <h5 className="text-center my-4"> You haven't published any blogs till now. </h5>
+            
+        </div>
+        :
           blogs.map((blog, i) => {
             return (
               <BlogItem 
@@ -100,6 +105,8 @@ const Profile = (props) => {
             )
           })
         }
+
+      <button className="btn btn-outline-success justify-content-center" onClick={()=>navigate("/write")}> Write a Blog </button>
       </div>
 
     </>
